@@ -5,6 +5,9 @@ const argv = require('minimist')(process.argv.slice(2))
 const pathHelper = require('path')
 const pem = require('pem')
 const fs = require('fs')
+const temp = require('temp')
+
+temp.track()
 
 const defaultOptions = {
   p: 3000,
@@ -18,16 +21,24 @@ pem.createCertificate({ days: 100, selfSigned: true }, (err, keys) => {
   if (err) {
     throw err
   }
-  fs.writeFileSync('__cert', keys.certificate, { encoding: 'utf8', flag: 'w' })
-  fs.writeFileSync('__key', keys.serviceKey, { encoding: 'utf8', flag: 'w' })
+  const certFile = temp.openSync('ssl-proxy.cert')
+  const keyFile = temp.openSync('ssl-proxy.key')
+  fs.writeFileSync(certFile.path, keys.certificate, {
+    encoding: 'utf8',
+    flag: 'w',
+  })
+  fs.writeFileSync(keyFile.path, keys.serviceKey, {
+    encoding: 'utf8',
+    flag: 'w',
+  })
 
   const options = Object.assign({}, defaultOptions, argv)
   proxy = redbird({
     port: options.r,
     ssl: {
       port: options.p,
-      key: pathHelper.resolve('__key'),
-      cert: pathHelper.resolve('__cert'),
+      key: pathHelper.resolve(keyFile.path),
+      cert: pathHelper.resolve(certFile.path),
     },
   })
 

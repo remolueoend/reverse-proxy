@@ -9,7 +9,8 @@
   "dependencies": {
     "minimist": "^1.2.0",
     "pem": "^1.12.3",
-    "redbird": "^0.7.0"
+    "redbird": "^0.7.0",
+    "temp": "^0.8.3"
   },
   "bin": {
     "ssl-proxy": "./index.js"
