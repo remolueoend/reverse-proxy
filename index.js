@@ -9,6 +9,7 @@ const fs = require('fs')
 const defaultOptions = {
   p: 3000,
   q: 3001,
+  r: 3002,
   h: 'localhost',
   i: 'localhost',
 }
@@ -22,6 +23,7 @@ pem.createCertificate({ days: 100, selfSigned: true }, (err, keys) => {
 
   const options = Object.assign({}, defaultOptions, argv)
   proxy = redbird({
+    port: options.r,
     ssl: {
       port: options.p,
       key: pathHelper.resolve('__key'),
