@@ -1,0 +1,16 @@
+{
+  "name": "ssl-reverse-proxy",
+  "version": "0.1.0",
+  "description": "Simple HTTPS to HTTP reverse proxy",
+  "main": "index.js",
+  "repository": "git@github.com:remolueoend/reverse-proxy.git",
+  "author": "Remo Zumsteg <remolueoend@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "redbird": "^0.7.0"
+  },
+  "bin": {
+    "ssl-proxy": "./index.js"
+  }
+}
